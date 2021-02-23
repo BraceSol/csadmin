@@ -1,0 +1,86 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Employer Search Results</h3> | &nbsp;450 returned
+        </div>
+        <div class="card-toolbar">
+            <div class="mx-2">
+                <div class="input-icon">
+                    <input type="text" class="form-control" name="searchText" placeholder="Search" [(ngModel)]="searchTerm" value="" />
+                    <span><i class="flaticon2-search-1 icon-md"></i></span>
+                </div>
+            </div>
+            <a type="button" class="btn btn-primary mx-2" routerLink="/employers/advanced-search">Advanced Search</a>
+            <a type="button" class="btn btn-primary" routerLink="/employers/create">Add Employer</a>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <!-- begin:Table -->
+        <div class="table-responsive angular-bootstrap-table">
+            <table class="table table-head-custom table-vertical-center overflow-hidden">
+                <thead>
+                    <th class="selection-cell-header" data-row-selection="true">
+                        <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectAllRows()"
+                        [checked]="grouping.checkAreAllRowsSelected()" /><span></span></label>
+                    </th>
+                    <th>NAME</th>
+                    <th>CITY</th>
+                    <th>STATE</th>
+                    <TH>TYPE OF FACILITY</TH>
+                    <th>LAST UPDATED</th>
+                    <th>ACTIONS</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let emp of empService.items$ | async | filter:searchTerm |  paginate: { itemsPerPage: itemsPerPage , currentPage: p}">
+                        <td class="selection-cell">
+                            <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectRow(emp.id)"
+                                [checked]="grouping.isRowSelected(emp.id)" />
+                            <span></span>
+                            </label>
+                        </td>
+                        <td>{{ emp.employerName }}</td>
+                        <td>{{ emp.city }}</td>
+                        <td>{{ emp.state }}</td>
+                        <td>{{ emp.typeOfFacility }}</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <!-- edit -->
+                            <a title="Edit Professional Profile" class="btn btn-icon btn-light btn-hover-primary btn-xs mx-3" [routerLink]="'/employers/profile/' + emp.id">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-primary"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end: Table -->
+
+        <!-- begin: Grouping -->
+        <ng-container *ngIf="grouping.getSelectedRowsCount()">
+            <div class="form">
+                <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+                    <div class="col-xl-12">
+                        <div class="form-group form-group-inline">
+                            <div class="form-label form-label-no-wrap">
+                                <label class="font-bold font-danger"><span>Selected records count:
+                        <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1" (click)="deleteSelected()">
+                        <i class="fa fa-trash"></i> Delete All
+                    </button>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <!-- end: Grouping -->
+        <!--       
+        <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator"
+            [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator> -->
+
+        <pagination-controls (pageChange)="p= $event"></pagination-controls>
+    </div>
+</div>

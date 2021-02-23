@@ -1,0 +1,79 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <ng-container *ngIf="entityRec">
+                <ng-container *ngIf="entityRec.id">Edit</ng-container>
+                <ng-container *ngIf="!entityRec.id">Create</ng-container>
+                Education
+                <ng-container *ngIf="entityRec.id">'{{entityRec.schoolName}}'</ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent">
+                <div class="spinner spinner-lg spinner-success"></div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="entityRec">
+            <form action="#" class="form form-label-right" [formGroup]="formGroup">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="form-label">School Name</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="schoolName" placeholder="Facility Name" autocomplete="off" [class.is-invalid]="isControlInvalid('schoolName')" [class.is-valid]="isControlValid('schoolName')" formControlName="schoolName"
+                        />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'schoolName')">Employer Name is required</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">City</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="city" placeholder="City" autocomplete="off" [class.is-invalid]="isControlInvalid('city')" [class.is-valid]="isControlValid('city')" formControlName="city" />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'city')">City is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="form-label">Postal Code</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="postalCode" placeholder="postalCode" autocomplete="off" [class.is-invalid]="isControlInvalid('postalCode')" [class.is-valid]="isControlValid('postalCode')" formControlName="postalCode"
+                        />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'postalCode')">postalCode is required</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">State</label>
+                        <select class="form-control form-control-lg form-control-solid" placeholder="State" formControlName="state" name="state">
+                            <option *ngFor="let state of stateList" [value]="state.value"  required="">{{state.viewValue}}</option>
+                          </select>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'state')">State is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Degree</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="degree" placeholder="degree" autocomplete="off" [class.is-invalid]="isControlInvalid('degree')" [class.is-valid]="isControlValid('degree')" formControlName="degree" />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'degree')">Degree is required</div>
+
+
+
+                    </div>
+                    <div class="col-md-6">
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Graduation Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="graduationDate" ngbDatepicker #de="ngbDatepicker" formControlName="graduationDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" (click)="de.toggle()" type="button">
+                    <i class="la la-calendar"></i>
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+        <ng-container *ngIf="entityRec">
+            <button type="submit" class="btn btn-primary btn-elevate" (click)="save()" [disabled]="formGroup.invalid">Save</button>
+        </ng-container>
+    </div>
+</div>

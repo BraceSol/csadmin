@@ -1,0 +1,252 @@
+<div class="card card-custom gutter-b">
+    <ng-container *ngIf="isLoading$ | async">
+        <div class="progress progress-modal">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </ng-container>
+
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">
+                <ng-container *ngIf="employerProfile">
+                    {{ id ? "Edit" : "New" }} Employer Profile
+                    <span *ngIf="employerProfile && employerProfile.id">'{{ employerProfile.employerName }} Provider ID: {{ employerProfile.cmsCertificationId }}'</span>
+                </ng-container>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <a type="button" class="btn btn-light" routerLink="/employers/listing">
+                <i class="fa fa-arrow-left"></i>Back
+            </a>
+            <button class="btn btn-secondary ml-2" (click)="reset()">
+          <i class="fa fa-redo"></i>Reset
+        </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+            <li class="nav-item cursor-pointer" (click)="changeTab(tabs.BASIC_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.BASIC_TAB" [class.active]="activeTabId === tabs.BASIC_TAB">
+            Profile
+          </a>
+            </li>
+            <li *ngIf="employerProfile && employerProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.LOCATIONS_TAB)">
+                <a class="nav-link" data-toggle="tab" role="button" [attr.aria-selected]="activeTabId === tabs.LOCATIONS_TAB" [class.active]="activeTabId === tabs.LOCATIONS_TAB">Locations</a>
+            </li>
+            <li *ngIf="employerProfile && employerProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.DEPARTMENTS_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.DEPARTMENTS_TAB" [class.active]="activeTabId === tabs.DEPARTMENTS_TAB">Departments</a>
+            </li>
+            <li *ngIf="employerProfile && employerProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.COMPLIANCE_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.COMPLIANCE_TAB" [class.active]="activeTabId === tabs.COMPLIANCE_TAB">Compliance Setup</a>
+            </li>
+            <li *ngIf="employerProfile && employerProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.EMPLOYEE_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.EMPLOYEE_TAB" [class.active]="activeTabId === tabs.EMPLOYEE_TAB">Employees</a>
+            </li>
+            <li *ngIf="employerProfile && employerProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.CONTRACTS_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.CONTRACTS_TAB" [class.active]="activeTabId === tabs.CONTRACTS_TAB">Contracts</a>
+            </li>
+            <li *ngIf="employerProfile && employerProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.JOBS_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.JOBS_TAB" [class.active]="activeTabId === tabs.JOBS_TAB">Jobs</a>
+            </li>
+            <li *ngIf="employerProfile && employerProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.USERS_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.USERS_TAB" [class.active]="activeTabId === tabs.USERS_TAB">Users</a>
+            </li>
+        </ul>
+
+        <ng-container *ngIf="activeTabId === tabs.BASIC_TAB">
+            <div class="mt-5" *ngIf="employerProfile">
+                <form action="#" class="form form-label-right" [formGroup]="formGroup" (ngSubmit)="save()">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card-body pt-0">
+                                <!--begin::Contact-->
+                                <div class="pt-4 pb-6">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Name" name="employerName" [class.is-invalid]="isControlInvalid('employerName')" [class.is-valid]="isControlValid('employerName')" formControlName="employerName"
+                                        />
+                                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'employerName')">Employer Name is required</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address Line 1</label>
+                                        <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Address Line 1" name="addressLine1" [class.is-invalid]="isControlInvalid('addressLine1')" [class.is-valid]="isControlValid('addressLine1')" formControlName="addressLine1"
+                                        />
+                                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'addressLine1')">Employer Address Line 1 is required</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address Line 2</label>
+                                        <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Address Line 2" name="addressLine2" [class.is-invalid]="isControlInvalid('addressLine2')" [class.is-valid]="isControlValid('addressLine2')" formControlName="addressLine2"
+                                        />
+                                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'addressLine2')">Employer Name is required</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address Line 3</label>
+                                        <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Address Line 3" name="addressLine3" [class.is-invalid]="isControlInvalid('addressLine3')" [class.is-valid]="isControlValid('addressLine3')" formControlName="addressLine3"
+                                        />
+                                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'addressLine3')">Employer Name is required</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Name" name="city" [class.is-invalid]="isControlInvalid('city')" [class.is-valid]="isControlValid('city')" formControlName="city" />
+                                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'city')">Employer City is required</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label>State</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Name" name="state" [class.is-invalid]="isControlInvalid('state')" [class.is-valid]="isControlValid('state')" formControlName="state" />
+                                            <div class="invalid-feedback" *ngIf="controlHasError('required', 'state')">Employer State is required</div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Zip Code</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Name" name="postalCode" [class.is-invalid]="isControlInvalid('postalCode')" [class.is-valid]="isControlValid('postalCode')" formControlName="postalCode"
+                                            />
+                                            <div class="invalid-feedback" *ngIf="controlHasError('required', 'postalCode')">Postal Code is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label>Phone</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="phoneNumber" name="phoneNumber" [class.is-invalid]="isControlInvalid('phoneNumber')" [class.is-valid]="isControlValid('phoneNumber')" formControlName="phoneNumber"
+                                            />
+                                            <div class="invalid-feedback" *ngIf="controlHasError('required', 'phoneNumber')">Phone is required</div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Website</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Website" name="website" [class.is-invalid]="isControlInvalid('website')" [class.is-valid]="isControlValid('website')" formControlName="website"
+                                            />
+                                            <div class="invalid-feedback" *ngIf="controlHasError('required', 'website')">Website is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Contact-->
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card-body pt-0">
+                                <!--begin::Contact-->
+                                <div class="pt-4 pb-6">
+                                    <div class="form-group">
+                                        <label>CMS ID</label>
+                                        <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Name" name="cmsCertificationId" [class.is-invalid]="isControlInvalid('cmsCertificationId')" [class.is-valid]="isControlValid('cmsCertificationId')"
+                                            formControlName="cmsCertificationId" />
+                                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'cmsCertificationId')">CMS ID is required</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Facility Type</label>
+                                        <select name="facilityType" class="form-control">
+                                            <option value="">Select a Facility Type</option>
+                                            <option value="specialty1" selected>Specialty 1</option>
+                                          </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Typer of Control</label>
+                                        <select name="typeOfControl" class="form-control">
+                                            <option value="">Select a Type of Control</option>
+                                            <option value="specialty1" selected>Specialty 1</option>
+                                          </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Trauma Level</label>
+                                        <select name="traumaLevel" class="form-control">
+                                            <option value="">Select a Trauma Level</option>
+                                            <option value="specialty1" selected>Specialty 1</option>
+                                          </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Teaching Facility</label>
+                                        <select name="teachingFacility" class="form-control">
+                                            <option value="">Is this a teaching facility</option>
+                                            <option value="1" selected>Yes</option>
+                                            <option value="0" selected>No</option>
+                                          </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Joint Commission Status</label>
+                                        <select name="joinCommissionStatus" class="form-control">
+                                            <option value="">Select...</option>
+                                            <option value="1" selected>Yes</option>
+                                            <option value="0" selected>No</option>
+                                          </select>
+                                    </div>
+                                </div>
+                                <!--end::Contact-->
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card-body pt-0">
+                                <div class="pt-4 pb-6">
+                                    <div class="form-group">
+                                        <label>Logo</label>
+                                        <div class="symbol symbol-60 symbol-xxl-100 mr-5 d-block">
+                                            <div class="symbol-label" style="background-image:url('/metronic/theme/html/demo1/dist/assets/media/users/300_13.jpg')"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bed Count</label>
+                                        <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Bed Count" name="totalBeds" [class.is-invalid]="isControlInvalid('totalBeds')" [class.is-valid]="isControlValid('totalBeds')" formControlName="totalBeds"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Total Employees</label>
+                                        <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Total Employees" name="totalEmployees" [class.is-invalid]="isControlInvalid('totalEmployees')" [class.is-valid]="isControlValid('totalEmployees')"
+                                            formControlName="totalEmployees" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-4">
+                                            <label>Permanent</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Perm Employees" name="totalEmployees" [class.is-invalid]="isControlInvalid('totalEmployees')" [class.is-valid]="isControlValid('totalEmployees')"
+                                                formControlName="totalEmployees" />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Per Diem</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Per Diem Employees" name="perdiemEmployees" [class.is-invalid]="isControlInvalid('perdiemEmployees')" [class.is-valid]="isControlValid('perdiemEmployees')"
+                                                formControlName="perdiemEmployees" />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Travel Staff</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Travel Employees" name="travelEmployees" [class.is-invalid]="isControlInvalid('travelEmployees')" [class.is-valid]="isControlValid('travelEmployees')"
+                                                formControlName="travelEmployees" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <a class="btn btn-default font-weight-bold mr-2" routerLink="/employers/listing">Cancel</a>
+                        <button type="submit" class="btn btn-primary font-weight-bold mr-2" [disabled]="formGroup.invalid">Save</button>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.LOCATIONS_TAB && employerProfile && employerProfile.id">
+            <app-locations [employerProfileId]="employerProfile.id"></app-locations>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.DEPARTMENTS_TAB && employerProfile && employerProfile.id">
+            <app-departments [employerProfileId]="employerProfile.id"></app-departments>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.COMPLIANCE_TAB && employerProfile && employerProfile.id">
+            <app-employer-compliance [employerProfileId]="employerProfile.id"></app-employer-compliance>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.EMPLOYEE_TAB && employerProfile && employerProfile.id">
+            <app-employees [employerProfileId]="employerProfile.id"></app-employees>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.CONTRACTS_TAB && employerProfile && employerProfile.id">
+            <app-contracts [employerProfileId]="employerProfile.id"></app-contracts>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.JOBS_TAB && employerProfile && employerProfile.id">
+            <app-employer-jobs [employerProfileId]="employerProfile.id"></app-employer-jobs>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.USERS_TAB && employerProfile && employerProfile.id">
+            <app-employer-users [employerProfileId]="employerProfile.id"></app-employer-users>
+        </ng-container>
+
+    </div>
+</div>

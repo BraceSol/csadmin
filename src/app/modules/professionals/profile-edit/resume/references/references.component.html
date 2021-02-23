@@ -1,0 +1,78 @@
+<div class="mt-5">
+    <!-- begin: Filtration form -->
+    <div class="form margin-b-30">
+        <div class="form-filtration">
+            <div class="row align-items-center">
+                <div class="col-md-2 margin-bottom-10-mobile"></div>
+                <div class="col-md-6 margin-bottom-10-mobile"></div>
+                <div class="col-md-4 text-right margin-bottom-10-mobile">
+                    <button type="button" class="btn btn-primary" (click)="create()">Add Reference</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: Filtration form -->
+    <!-- begin:Table -->
+    <div class="table-responsive angular-bootstrap-table">
+        <table class="table table-head-custom table-vertical-center overflow-hidden">
+            <thead>
+                <th class="selection-cell-header" data-row-selection="true">
+                    <label class="checkbox checkbox-single"><input type="checkbox" /><span></span></label>
+                </th>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>TITLE</th>
+                <th>EMPLOYER</th>
+                <th>ACTIONS</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reference of thisService.items$ | async">
+                    <td class="selection-cell">
+                        <label class="checkbox checkbox-single"><input type="checkbox" />
+                <span></span>
+              </label>
+                    </td>
+                    <td>{{ reference.referenceName }}</td>
+                    <td>{{ reference.referenceEmail }}</td>
+                    <td>{{ reference.referenceTitle }}</td>
+                    <td>{{ reference.referenceEmployer }}</td>
+                    <td>
+                        <button title="View" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3" (click)="edit(reference.id)">
+                          <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-primary">
+                          </span>
+                        </button>
+                        <button title="Delete" class="btn btn-icon btn-light btn-hover-danger btn-sm" (click)="delete(reference.id)">
+                          <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-danger">
+                          </span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- end: Table -->
+    <!-- begin: Grouping -->
+    <!-- <ng-container *ngIf="grouping.getSelectedRowsCount()">
+      <div class="form">
+        <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+          <div class="col-xl-12">
+            <div class="form-group form-group-inline">
+              <div class="form-label form-label-no-wrap">
+                <label class="font-bold font-danger"><span>Selected records count:
+                    <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+              </div>
+              <div>
+                <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1"
+                  (click)="deleteSelected()">
+                  <i class="fa fa-trash"></i> Delete All
+                </button>&nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container> -->
+    <!-- end: Grouping -->
+    <!-- <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator"
+      [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator> -->
+</div>

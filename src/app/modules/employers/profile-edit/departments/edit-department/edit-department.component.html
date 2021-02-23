@@ -1,0 +1,62 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <ng-container *ngIf="entityRec">
+                <ng-container *ngIf="entityRec.id">Edit</ng-container>
+                <ng-container *ngIf="!entityRec.id">Create</ng-container>
+                Department
+                <ng-container *ngIf="entityRec.id">'{{entityRec.departmentName}}'</ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent">
+                <div class="spinner spinner-lg spinner-success"></div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="entityRec">
+            <form action="#" class="form form-label-right" [formGroup]="formGroup">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="form-label">Department Name</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="departmentName" placeholder="Department Name" autocomplete="off" [class.is-invalid]="isControlInvalid('departmentName')" [class.is-valid]="isControlValid('departmentName')"
+                            formControlName="departmentName" />
+                        <div class="valid-feedback" *ngIf="isControlValid('departmentName')">Department Name was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'departmentName')">Department Name is required</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'departmentName')">Department Name should have at least 3 symbols</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'departmentName')">Department Name should have maximum 100 symbols</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Cost Center Code</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="costCenterCode" placeholder="Cost Center Code" autocomplete="off" [class.is-invalid]="isControlInvalid('costCenterCode')" [class.is-valid]="isControlValid('costCenterCode')"
+                            formControlName="costCenterCode" />
+                        <div class="valid-feedback" *ngIf="isControlValid('costCenterCode')">Cost Center Code was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'costCenterCode')">Cost Center Code is required</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'costCenterCode')">Cost Center Code should have at least 3 symbols</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'costCenterCode')">Cost Center Code should have maximum 100 symbols</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Description</label>
+                        <textarea rows="8" class="form-control form-control-lg form-control-solid  is-invalid" name="description" placeholder="Description" autocomplete="off" [class.is-invalid]="isControlInvalid('description')" [class.is-valid]="isControlValid('description')"
+                            formControlName="description"></textarea>
+                        <div class="valid-feedback" *ngIf="isControlValid('description')">Description was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'description')">Description is required</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'description')">Description should have at least 3 symbols</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'description')">Description should have maximum 400 symbols</div>
+
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+        <ng-container *ngIf="entityRec">
+
+            <button type="submit" class="btn btn-primary btn-elevate" (click)="save()" [disabled]="formGroup.invalid">Save</button>
+        </ng-container>
+    </div>
+</div>

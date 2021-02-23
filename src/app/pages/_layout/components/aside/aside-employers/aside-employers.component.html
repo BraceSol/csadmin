@@ -1,0 +1,112 @@
+<!--begin::Menu Container-->
+<div id="kt_aside_menu" class="aside-menu min-h-lg-800px" [ngClass]="asideMenuCSSClasses" data-menu-vertical="1" [attr.data-menu-scroll]="asideMenuScroll" [attr.data-menu-dropdown]="asideMenuDropdown" data-menu-dropdown-timeout="500">
+    <!-- begin::Menu Nav -->
+    <ul class="menu-nav px-10 py-5" [ngClass]="ulCSSClasses">
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <h3 class="p-2 p-lg-3 my-1 my-lg-3">Employers</h3>
+        </li>
+        <!-- begin::section -->
+        <!-- <li class="menu-section">
+                        <h3 class="menu-text">Users &amp; Security</h3>
+                        <i class="menu-icon flaticon-more-v2"></i>
+                    </li> -->
+        <!-- end:: section -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/employers/listing" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/Home/Building.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text" translate="MENU.EMPS.ALL"></span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/employers/listing/hospitals" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/Home/Building.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text" translate="MENU.EMPS.HOSPITALS"></span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/employers/listing/agencies" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/Home/Building.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text" translate="MENU.EMPS.AGENCIES"></span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+        <!-- begin::section -->
+        <li class="menu-section">
+            <h3 class="menu-text" translate="MENU.GLOBAL.SEARCH"></h3>
+            <i class="menu-icon flaticon-more-v2"></i>
+        </li>
+        <!-- end:: section -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/employers/search" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/General/User.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text" translate="MENU.GLOBAL.BASICSEARCH"></span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/employers/advanced-search" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/Home/Building.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text" translate="MENU.GLOBAL.ADVSEARCH"></span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/employers/listing/recent" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/Home/Building.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text" translate="MENU.GLOBAL.RECVIEWED"></span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+
+
+        <!-- begin::section -->
+        <li class="menu-section">
+            <h3 class="menu-text" translate="MENU.GLOBAL.MYVIEWS"></h3>
+            <i class="menu-icon flaticon-more-v2"></i>
+        </li>
+        <!-- end:: section -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/employers/listing/view1" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/Home/Building.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text">My View 1</span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+
+
+        <!-- begin::section -->
+        <li class="menu-section">
+            <h3 class="menu-text" translate="MENU.GLOBAL.DATAMGT"></h3>
+            <i class="menu-icon flaticon-more-v2"></i>
+        </li>
+        <!-- end:: section -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/employers/create" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/Home/Building.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text" translate="MENU.EMPS.ADD"></span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+        <!-- begin::1 Level -->
+        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/data/import/employers" routerLinkActive="active">
+                <span [inlineSVG]="'./assets/media/svg/icons/Home/Building.svg'" cacheSVG="true" class="svg-icon menu-icon"></span>
+                <span class="menu-text" translate="MENU.EMPS.IMPORT"></span>
+            </a>
+        </li>
+        <!-- end::1 Level -->
+
+    </ul>
+    <!-- end::Menu Nav -->
+</div>
+<!--end::Menu Container-->

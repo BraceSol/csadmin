@@ -1,0 +1,59 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <ng-container *ngIf="entityRec">
+                <ng-container *ngIf="entityRec.id">Edit</ng-container>
+                <ng-container *ngIf="!entityRec.id">Create</ng-container>
+                Processing Queue
+                <ng-container *ngIf="entityRec.id">'{{entityRec.title}}'</ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent">
+                <div class="spinner spinner-lg spinner-success"></div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="entityRec">
+            <form action="#" class="form form-label-right" [formGroup]="formGroup">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="title" placeholder="Title" autocomplete="off" [class.is-invalid]="isControlInvalid('title')" [class.is-valid]="isControlValid('title')" formControlName="title" />
+                        <div class="valid-feedback" *ngIf="isControlValid('title')">Title was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'title')">Title is required</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'title')">Title should have at least 3 symbols</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'title')">Title should have maximum 100 symbols</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">SLA Code</label>
+                        <select class="form-control form-control-lg form-control-solid" placeholder="Queue Type" formControlName="queueType" name="queueType">
+                            <option *ngFor="let query of queryList" [value]="query.value"  required="">{{query.viewValue}}</option>
+                          </select>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'queueType')">SLA Code is required</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Description</label>
+                        <textarea rows="8" class="form-control form-control-lg form-control-solid  is-invalid" name="description" placeholder="Description" autocomplete="off" [class.is-invalid]="isControlInvalid('description')" [class.is-valid]="isControlValid('description')"
+                            formControlName="description"></textarea>
+                        <div class="valid-feedback" *ngIf="isControlValid('description')">Description was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'description')">Description is required</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'description')">Description should have at least 3 symbols</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'description')">Description should have maximum 400 symbols</div>
+
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+        <ng-container *ngIf="entityRec">
+
+            <button type="submit" class="btn btn-primary btn-elevate" (click)="save()" [disabled]="formGroup.invalid">Save</button>
+        </ng-container>
+    </div>
+</div>

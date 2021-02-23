@@ -1,0 +1,87 @@
+<!--begin::Profile Overview-->
+<div class="d-flex flex-row">
+    <!--begin::Aside-->
+    <div class="flex-row-auto offcanvas-mobile w-250px w-xl-300px" id="kt_profile_aside">
+      <!--begin::Profile Card-->
+        <div class="card card-custom card-stretch" > <!-- *ngIf="user$ | async as user" -->
+            <!--begin::Body-->
+            <div class="card-body pt-4">
+            
+                <!--begin::Nav-->
+                <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.BASIC_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.BASIC_TAB"
+                        [class.active]="activeTabId === tabs.BASIC_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/General/User.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Compliance Overview</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.DOCTYPES_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.DOCTYPES_TAB"
+                        [class.active]="activeTabId === tabs.DOCTYPES_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Code/Compiling.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Document Types</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.RULES_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.RULES_TAB"
+                        [class.active]="activeTabId === tabs.RULES_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Shield-user.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Rules Setup</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.QUEUES_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.QUEUES_TAB"
+                        [class.active]="activeTabId === tabs.QUEUES_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Mail-opened.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Processing Queues</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.AUDITS_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.AUDITS_TAB"
+                        [class.active]="activeTabId === tabs.AUDITS_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Mail-opened.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Audits</span>
+                        </a>
+                    </div>
+                </div>
+                <!--end::Nav-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Profile Card-->
+    </div>
+    <!--end::Aside-->
+  
+    <!--begin::Content-->
+    <div class="flex-row-fluid ml-lg-8">
+        <ng-container *ngIf="activeTabId === tabs.BASIC_TAB && employerProfileId">
+            Compliance Overview
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.DOCTYPES_TAB "> <!-- && employerProfile && employerProfile.id -->
+            <app-employerdoctypes [employerId]="employerProfileId"></app-employerdoctypes>
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.RULES_TAB"> <!-- && employerProfile && employerProfile.id -->
+            <app-employerrules [employerId]="employerProfileId"></app-employerrules>
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.QUEUES_TAB"> <!-- && employerProfile && employerProfile.id -->
+            <app-employerqueues [employerId]="employerProfileId"></app-employerqueues>
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.AUDITS_TAB"> <!-- && employerProfile && employerProfile.id -->
+            <app-employeraudits [employerId]="employerProfileId"></app-employeraudits>
+        </ng-container>
+    </div>
+    <!--end::Content-->
+  </div>
+  <!--end::Profile Overview-->
+  

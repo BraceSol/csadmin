@@ -1,0 +1,69 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <ng-container *ngIf="entityRec">
+                <ng-container *ngIf="entityRec.id">Edit</ng-container>
+                <ng-container *ngIf="!entityRec.id">Create</ng-container>
+                License
+            </ng-container>
+        </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent">
+                <div class="spinner spinner-lg spinner-success"></div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="entityRec">
+            <form action="#" class="form form-label-right" [formGroup]="formGroup">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="form-label">License State</label>
+                        <select class="form-control form-control-lg form-control-solid" placeholder="State" formControlName="licenseState" name="licenseState">
+                            <option *ngFor="let state of stateList" [value]="state.value"  required="">{{state.viewValue}}</option>
+                          </select>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'licenseState')">License State is required</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">License Code</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="licenseCode" placeholder="License Code" autocomplete="off" [class.is-invalid]="isControlInvalid('licenseCode')" [class.is-valid]="isControlValid('licenseCode')" formControlName="licenseCode"
+                        />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'licenseCode')">License Code is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Issue Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="issueDate" ngbDatepicker #d="ngbDatepicker" formControlName="issueDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                    <i class="la la-calendar"></i>
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Expiration Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="expirationDate" ngbDatepicker #de="ngbDatepicker" formControlName="expirationDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" (click)="de.toggle()" type="button">
+                    <i class="la la-calendar"></i>
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+        <ng-container *ngIf="entityRec">
+            <button type="submit" class="btn btn-primary btn-elevate" (click)="save()" [disabled]="formGroup.invalid">Save</button>
+        </ng-container>
+    </div>
+</div>

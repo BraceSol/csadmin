@@ -1,0 +1,266 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Process Upload : {{ id }}</h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <!--begin: Wizard -->
+        <div #wizard class="wizard wizard-3" id="kt_wizard_v3" data-wizard-state="step-first">
+            <div class="wizard-nav border-right">
+                <!--begin: Form Wizard Nav -->
+                <div class="wizard-nav border-bottom mb-1 mb-lg-5">
+                    <div class="wizard-steps px-8 py-8 px-lg-3 py-lg-3">
+                        <a class="wizard-step" href="javascript:;" data-wizard-type="step" data-wizard-state="current">
+                            <div class="wizard-label">
+                                <div class="wizard-title"><span>1</span> Upload Document</div>
+                                <div class="wizard-bar"></div>
+                            </div>
+                        </a>
+                        <a class="wizard-step" href="javascript:;" data-wizard-type="step">
+                            <div class="wizard-label">
+                                <div class="wizard-title"><span>2</span> Assign User</div>
+                                <div class="wizard-bar"></div>
+                            </div>
+                        </a>
+                        <a class="wizard-step" href="javascript:;" data-wizard-type="step">
+                            <div class="wizard-label">
+                                <div class="wizard-title"><span>3</span> Assign Document Type</div>
+                                <div class="wizard-bar"></div>
+                            </div>
+                        </a>
+                        <a class="wizard-step" href="javascript:;" data-wizard-type="step">
+                            <div class="wizard-label">
+                                <div class="wizard-title"><span>4</span> Extract Meta-Data</div>
+                                <div class="wizard-bar"></div>
+                            </div>
+                        </a>
+                        <a class="wizard-step" href="javascript:;" data-wizard-type="step">
+                            <div class="wizard-label">
+                                <div class="wizard-title"><span>5</span> Review and Submit</div>
+                                <div class="wizard-bar"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--end: Form Wizard Nav -->
+            </div>
+            <div class="wizard-body px-8 px-lg-10">
+                <!--begin: Wizard Form-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--begin: Form Wizard Form-->
+                        <form class="form" id="kt_form">
+                            <!--begin: Form Wizard Step 1-->
+                            <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                <div class="kt-form__section kt-form__section--first">
+                                    <div class="kt-wizard-v2__form">
+
+                                        <ng-uppy [config]="settings" (onFileUpload)="onFileUpload($event)"></ng-uppy>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--begin: Form Wizard Step 2-->
+                            <div class="pb-5" data-wizard-type="step-content">
+                                <h4 class="mb-10 font-weight-bold text-dark">
+                                    User Lookup
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="First Name" name="firstName" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="First Name" name="lastName" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Employer</label>
+                                            <input id="typeahead-basic" type="text" [ngbTypeahead]="search" class="form-control form-control-md form-control-solid" name="employerId" placeholder="Employer Name" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>State</label>
+                                            <input type="text" class="form-control form-control-md form-control-solid" autocomplete="off" placeholder="Name" name="state" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label>&nbsp;</label>
+                                            <a type="button" class="btn btn-primary">Search</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- begin:Table -->
+                                        <div class="table-responsive angular-bootstrap-table">
+                                            <table class="table table-head-custom table-vertical-center overflow-hidden">
+                                                <thead>
+                                                    <th>NAME</th>
+                                                    <th>PROFESSION</th>
+                                                    <th>SPECIALTY</th>
+                                                    <th>CITY</th>
+                                                    <th>STATE</th>
+                                                    <th>LAST UPDATED</th>
+                                                    <th>ACTIONS</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td> prof.lastName prof.firstName </td>
+                                                        <td> prof.professionId </td>
+                                                        <td> prof.specialtyId </td>
+                                                        <td> prof.city </td>
+                                                        <td> prof.state </td>
+                                                        <td> prof.updatedOn </td>
+                                                        <td>
+                                                            <a>Select User</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- end: Table -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end: Form Wizard Step 1-->
+
+                            <!--begin: Form Wizard Step 3-->
+                            <div class="pb-5" data-wizard-type="step-content">
+                                <!-- <h4 class="mb-10 font-weight-bold text-dark">
+                    Select your Document Type
+                  </h4> -->
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Document Type</label>
+
+                                            <select name="documentTypeId" [(ngModel)]="model.documentTypeId" (change)="getAttributes($event.target.value)" class="form-control">
+                                <option value="">Select Document Type</option>
+                               
+                                <option *ngFor="let doc of docList" [value]="doc.id">{{doc.documentName}}</option>
+
+              </select>
+                                            <span class="form-text text-muted">Please enter your Postcode.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end: Form Wizard Step 2-->
+
+                            <!--begin: Form Wizard Step 4-->
+                            <div class="pb-5" data-wizard-type="step-content">
+                                <!-- <h4 class="mb-10 font-weight-bold text-dark">
+                    Assign Document Attributes
+                  </h4> -->
+                                <div class="row">
+
+                                    <div class="col-md-12" *ngFor="let attri of attributeList">
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">Attributes</label>
+                                            <div class="col-lg-6" *ngIf="attri.attributeType==='string'">
+                                                <input type="text" (change)="saveName(attri,$event.target.value)" class="form-control" placeholder="Enter attribute 1" />
+
+                                                <span class="form-text text-muted">Please enter your Attribute Name</span>
+                                            </div>
+                                            <div class="col-lg-6" *ngIf="attri.attributeType==='number'">
+                                                <input type="number" class="form-control" (change)="saveNumber(attri,$event.target.value)" placeholder="Enter attribute 2" />
+                                                <span class="form-text text-muted">Please enter Attribute number</span>
+                                            </div>
+                                            <!-- <div class="col-lg-6" *ngIf="attri.attributeType=='date'">
+                                <label class="col-form-label text-right col-lg-3 col-sm-12">Issue Date</label>
+                                <div class="input-group">
+                                    <input class="form-control"  placeholder="yyyy-mm-dd" ngbDatepicker #d="ngbDatepicker">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" (click)="d.toggle()" type="button">
+    <i class="la la-calendar"></i>
+  </button>
+                                    </div>
+                                </div>-->
+                                            <div class="col-lg-6" *ngIf="attri.attributeType==='dropdown'">
+                                                <select class="form-control" placeholder="Select" (change)="saveOptions(attri.fieldOptions,attri,$event.target.value)">
+                               <option>Select</option>
+                                    <option *ngFor="let fieldOption of attri.fieldOptions" [value]="fieldOption.caption" >{{fieldOption.caption}}</option>
+
+                  </select>
+                                                <span class="form-text text-muted">Please Select Attribute Name</span>
+                                            </div>
+                                            <div class="col-lg-6" *ngIf="attri.attributeType==='number'">
+                                                <input type="radio">
+                                            </div>
+                                            <div class="col-lg-6" *ngIf="attri.attributeType==='number'">
+                                                <input type="checkbox">
+                                            </div>
+                                            <!-- </div> -->
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--end: Form Wizard Step 3-->
+
+                            <!--begin: Form Wizard Step 5-->
+                            <div class="pb-5" data-wizard-type="step-content">
+                                <!-- <h4 class="mb-10 font-weight-bold text-dark">
+                    Review your Details and Submit
+                  </h4> -->
+                                <div class="border-bottom mb-5 pb-5">
+                                    <div class="font-weight-bolder mb-3">Documents:</div>
+                                    <div class="line-height-xl">
+                                        John Wick
+                                        <br /> Phone: +61412345678 <br /> Email: johnwick@reeves.com
+                                    </div>
+                                </div>
+                                <div class="border-bottom mb-5 pb-5">
+                                    <div class="font-weight-bolder mb-3">Document Type:</div>
+                                    <div class="line-height-xl">
+                                        Document Type Name
+                                    </div>
+                                </div>
+                                <div class="border-bottom mb-5 pb-5">
+                                    <div class="font-weight-bolder mb-3">Attributes:</div>
+                                    <div class="line-height-xl">
+                                        Attribute 1: some value <br /> Attribute 2: some value <br /> Attribute 3: some value <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end: Form Wizard Step 6-->
+
+                            <!--begin: Form Actions -->
+                            <div class="d-flex justify-content-between border-top pt-10">
+                                <div class="mr-2">
+                                    <div class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-prev">
+                                        Previous
+                                    </div>
+                                </div>
+                                <div>
+                                    <div (click)="onSubmit()" class="btn btn-success font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-submit">
+                                        Submit
+                                    </div>
+                                    <div class="btn btn-primary font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-next">
+                                        Next Step
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end: Form Actions -->
+                        </form>
+                        <!--end: Form Wizard Form-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end: Wizard -->
+    </div>
+</div>

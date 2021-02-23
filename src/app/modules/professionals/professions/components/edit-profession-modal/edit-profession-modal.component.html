@@ -1,0 +1,83 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <ng-container *ngIf="prof">
+                <ng-container *ngIf="prof.id">Edit</ng-container>
+                <ng-container *ngIf="!prof.id">Create</ng-container>
+                Profession
+                <ng-container *ngIf="prof.id">'{{prof.professionName}}'</ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent">
+                <div class="spinner spinner-lg spinner-success"></div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="prof">
+            <form action="#" class="form form-label-right" [formGroup]="formGroup">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="form-label">Profession Name</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="professionName" placeholder="Profession Name" autocomplete="off" [class.is-invalid]="isControlInvalid('professionName')" [class.is-valid]="isControlValid('professionName')"
+                            formControlName="professionName" />
+                        <div class="valid-feedback" *ngIf="isControlValid('professionName')">Profession Name was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'professionName')">Profession Name is required</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'professionName')">Profession Name should have at least 3 symbols</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'professionName')">Profession Name should have maximum 100 symbols</div>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control form-control-lg form-control-solid  is-invalid" name="description" placeholder="Description" autocomplete="off" [class.is-invalid]="isControlInvalid('description')" [class.is-valid]="isControlValid('description')" rows="6"
+                            formControlName="description"></textarea>
+                        <div class="valid-feedback" *ngIf="isControlValid('description')">Description was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'description')">Description is required</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'description')">Description should have at least 3 symbols</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'description')">Description should have maximum 400 symbols</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="form-label">Industry Name</label>
+                        <select class="form-control form-control-lg form-control-solid" name="industryId" id="" formControlName="industryId">
+                           <option *ngFor="let industry of industoriesList"  [value]="industry.id">{{industry.industryName}}  </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div class="checkbox-list">
+                            <label class="checkbox">
+                  <input type="checkbox"  name="Checkboxes4" />
+                  <span></span>
+                  IsDefault
+              </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Specialties</label>
+                    <div class="col-9 col-form-label" *ngFor="let specialty of SpecialtiesList">
+                        <div class="checkbox-list">
+                            <label class="checkbox">
+                      <input type="checkbox" value="{{specialty.id}}" (change)="onCheckChange($event)"  name="spec"/>
+                      <span></span>
+                      {{specialty.specialtyName}}
+                  </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+        <ng-container *ngIf="prof">
+
+            <button type="submit" class="btn btn-primary btn-elevate" (click)="save()" [disabled]="formGroup.invalid">Save</button>
+        </ng-container>
+    </div>
+</div>

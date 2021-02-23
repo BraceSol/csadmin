@@ -1,0 +1,13 @@
+<div>
+    <!-- <h3>{{profileResult[0].profileName}}</h3> -->
+
+    <h3>Select ProfileType</h3>
+
+    <!-- <div *ngIf="profileResult.profileName"> -->
+    <div *ngFor="let pro of profileResult">
+        <button style="color: #f9f9fa;margin-right: 5px;" (click)="gotoInfo(pro.id)"> {{pro.profileName}} 
+            </button>
+    </div>
+    <!-- </div> -->
+
+</div>

@@ -1,0 +1,99 @@
+<!--begin::Profile Overview-->
+<div class="d-flex flex-row">
+    <!--begin::Aside-->
+    <div class="flex-row-auto offcanvas-mobile w-250px w-xl-300px" id="kt_profile_aside">
+      <!--begin::Profile Card-->
+        <div class="card card-custom card-stretch" > <!-- *ngIf="user$ | async as user" -->
+            <!--begin::Body-->
+            <div class="card-body pt-4">
+            
+                <!--begin::Nav-->
+                <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.BASIC_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.BASIC_TAB"
+                        [class.active]="activeTabId === tabs.BASIC_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/General/User.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Resume and Cover Letter</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.WORKHISTORY_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.WORKHISTORY_TAB"
+                        [class.active]="activeTabId === tabs.WORKHISTORY_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Code/Compiling.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Work History</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.EDUCATION_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.EDUCATION_TAB"
+                        [class.active]="activeTabId === tabs.EDUCATION_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Shield-user.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Education</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.LICENSES_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.LICENSES_TAB"
+                        [class.active]="activeTabId === tabs.LICENSES_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Mail-opened.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Licenses</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.CERTS_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.CERTS_TAB"
+                        [class.active]="activeTabId === tabs.CERTS_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Mail-opened.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">Certifications</span>
+                        </a>
+                    </div>
+                    <div class="navi-item mb-2" (click)="changeTab(tabs.REFERENCES_TAB)">
+                        <a class="navi-link py-4" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.REFERENCES_TAB"
+                        [class.active]="activeTabId === tabs.REFERENCES_TAB">
+                            <span class="navi-icon mr-2">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Layout/Layout-top-panel-6.svg'" cacheSVG="true" class="svg-icon"></span>
+                            </span>
+                            <span class="navi-text font-size-lg">References</span>
+                        </a>
+                    </div>
+                </div>
+                <!--end::Nav-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Profile Card-->
+    </div>
+    <!--end::Aside-->
+  
+    <!--begin::Content-->
+    <div class="flex-row-fluid ml-lg-8">
+        <ng-container *ngIf="activeTabId === tabs.BASIC_TAB && professionalProfileId">
+            Resume Overview
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.WORKHISTORY_TAB  && professionalProfileId"> 
+            <app-workhistory [professionalProfileId]="professionalProfileId"></app-workhistory>
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.EDUCATION_TAB && professionalProfileId"> 
+            <app-education [professionalProfileId]="professionalProfileId"></app-education>
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.LICENSES_TAB && professionalProfileId"> 
+            <app-licenses [professionalProfileId]="professionalProfileId"></app-licenses>
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.CERTS_TAB && professionalProfileId"> 
+            <app-certifications [professionalProfileId]="professionalProfileId"></app-certifications>
+        </ng-container>
+        <ng-container *ngIf="activeTabId === tabs.REFERENCES_TAB && professionalProfileId"> 
+            <app-references [professionalProfileId]="professionalProfileId"></app-references>
+        </ng-container>
+    </div>
+    <!--end::Content-->
+  </div>
+  <!--end::Profile Overview-->
+  

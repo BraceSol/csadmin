@@ -1,0 +1,84 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Roles</h3>
+        </div>
+        <div class="card-toolbar">
+            <div class="form form-label-right">
+                <div class="row">
+                    <div>
+                        <input type="text" class="form-control" name="searchText" placeholder="Search" value="" [(ngModel)]="searchText" />
+                    </div>
+                    <a type="button" class="btn btn-primary mx-8" (click)="create()">New Role</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- begin:Table -->
+        <div class="table-responsive angular-bootstrap-table">
+            <table class="table table-head-custom table-vertical-center overflow-hidden">
+                <thead>
+                    <th class="selection-cell-header" data-row-selection="true">
+                        <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectAllRows()"
+                  [checked]="grouping.checkAreAllRowsSelected()" /><span></span></label>
+                    </th>
+                    <th>ROLE</th>
+                    <th>PROFILE TYPE</th>
+                    <th>DESCRIPTION</th>
+                    <th>ACTIONS</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let role of rolesService.items$ | async | filter: searchText |  paginate: { itemsPerPage: itemsPerPage , currentPage: p} ">
+                        <td class="selection-cell">
+                            <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectRow(role.id)"
+                    [checked]="grouping.isRowSelected(role.id)" />
+                  <span></span>
+                </label>
+                        </td>
+                        <td>{{ role.roleName }}</td>
+                        <td>{{ role.profileType.profileName }}</td>
+                        <td>{{ role.description }}</td>
+                        <td>
+                            <!-- edit -->
+                            <a title="Edit role" class="btn btn-icon btn-light btn-hover-primary btn-xs mx-3" (click)="edit(role.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-primary">
+                  </span>
+                            </a>
+                            <!-- delete -->
+                            <a title="Delete role" class="btn btn-icon btn-light btn-hover-danger btn-xs" (click)="delete(role.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-danger">
+                  </span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end: Table -->
+        <pagination-controls (pageChange)="p= $event"></pagination-controls>
+
+
+        <!-- begin: Grouping -->
+        <!-- <ng-container *ngIf="grouping.getSelectedRowsCount()">
+            <div class="form">
+                <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+                    <div class="col-xl-12">
+                        <div class="form-group form-group-inline">
+                            <div class="form-label form-label-no-wrap">
+                                <label class="font-bold font-danger"><span>Selected records count:
+                    <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1" (click)="deleteSelected()">
+                  <i class="fa fa-trash"></i> Delete All
+                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container> -->
+        <!-- end: Grouping -->
+    </div>
+</div>

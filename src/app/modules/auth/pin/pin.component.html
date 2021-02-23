@@ -1,0 +1,5 @@
+<h3>
+    OTP</h3>
+<code-input (codeChanged)="onCodeChanged($event)" (codeCompleted)="onCodeCompleted($event)">
+</code-input>
+<button (click)="reSend()" [disabled]="isResendButtonDisabled">Resend Otp</button>

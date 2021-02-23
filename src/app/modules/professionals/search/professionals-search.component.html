@@ -1,0 +1,59 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Professionals Search</h3>
+        </div>
+        <div class="card-toolbar">
+            <button type="button" class="btn btn-primary" routerLink="/professionals/advanced-search">Advanced</button>
+        </div>
+    </div>
+    <form class="form">
+        <div class="card-body">
+            <div class="form-group">
+                <label>First Name:</label>
+                <input type="text" class="form-control" [(ngModel)]="model.firstName" name="firstName" placeholder="Enter first name" />
+            </div>
+            <div class="form-group">
+                <label>Last Name:</label>
+                <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" placeholder="Enter last name" />
+            </div>
+            <div class="form-group">
+                <label>Email address:</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="model.email" placeholder="Enter email" />
+            </div>
+            <div class="form-group">
+                <label>Phone Number:</label>
+                <input type="text" class="form-control" name="phone" [(ngModel)]="model.phone" placeholder="Enter phone number" />
+            </div>
+            <div class="form-group">
+                <label for="exampleSelects">Profession</label>
+                <select name="professionId" [(ngModel)]="model.professionId" class="form-control">
+                    <option *ngFor="let pro of proResults" [value]="pro.id" >{{pro.professionName}}</option>
+                  
+        </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleSelects">Specialty</label>
+                <select name="specialtyId" [(ngModel)]="model.specialtyId" class="form-control">
+                    <option *ngFor="let sp of spResults" [value]="sp.id" selected>{{sp.specialtyName}}</option>
+                 
+        </select>
+            </div>
+            <div class="form-group">
+                <label>City:</label>
+                <input type="text" class="form-control" id="city" [(ngModel)]="model.city" name="city" placeholder="Enter City" />
+            </div>
+            <div class="form-group">
+                <label for="exampleSelects">State</label>
+                <select class="form-control form-control-sm" name="state" [(ngModel)]="model.state">
+                    <option *ngFor="let state of stateList" [value]="state.value"  required="">{{state.viewValue}}</option>
+   
+        </select>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="reset" class="btn btn-primary mr-2" (click)="onSubmit()">Submit</button>
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+        </div>
+    </form>
+</div>

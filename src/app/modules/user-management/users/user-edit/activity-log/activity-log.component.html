@@ -1,0 +1,45 @@
+<div class="mt-5">
+    <!-- begin: Filtration form -->
+    <div class="form margin-b-30">
+        <div class="form-filtration">
+            <div class="row align-items-center">
+                <div class="col-md-2 margin-bottom-10-mobile">
+                    <form>
+                        <div>
+                            <input type="text" class="form-control" name="searchText" placeholder="Search" [(ngModel)]="searchText" />
+                            <small class="form-text text-muted"><b>Search</b> in all fields</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-8 margin-bottom-10-mobile"></div>
+                <div class="col-md-2 text-right margin-bottom-10-mobile"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end: Filtration form -->
+    <!-- begin:Table -->
+    <div class="table-responsive angular-bootstrap-table">
+        <table class="table table-head-custom table-vertical-center overflow-hidden">
+            <thead>
+                <th>ENTITY TYPE</th>
+                <th>CATEGORY</th>
+                <th>ACTION</th>
+                <th>CREATED AT</th>
+                <th>ACTIONS</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let activity of thisService.items$ | async | filter: searchText |  paginate: { itemsPerPage: itemsPerPage , currentPage: p}">
+                    <td>{{ activity.entityType }}</td>
+                    <td>{{ activity.activityCategory }}</td>
+                    <td>{{ activity.activityTitle }}</td>
+                    <td>{{ activity.createdAt | date }}</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- end: Table -->
+    
+    <pagination-controls (pageChange)="p= $event"></pagination-controls>
+    <!-- <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator" [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator> -->
+</div>

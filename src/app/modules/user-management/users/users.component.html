@@ -1,0 +1,109 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Users</h3>
+        </div>
+        <div class="card-toolbar">
+            <div class="mx-4">
+                <input type="text" class="form-control" name="searchText" placeholder="Search" [(ngModel)]="searchText" />
+            </div>
+            <a type="button" class="btn btn-primary" routerLink="/admin/users/create">Add User</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- begin: Filtration form -->
+        <!-- <div class="form form-label-right">
+            <div class="form-group row">
+                <div class="col-lg-4">
+                    <div class="row" [formGroup]="filterGroup">
+                        <div class="col-lg-6">
+                            <select class="form-control" name="status" placeholder="Filter by Status" formControlName="status">
+                <option value="">All</option>
+                <option value="1">Selling</option>
+                <option value="2">Sold</option>
+              </select><small class="form-text text-muted"><b>Filter</b> by Status</small>
+                        </div>
+                        <div class="col-lg-6">
+                            <select class="form-control" placeholder="Filter by Contition" name="condition" formControlName="condition">
+                <option value="">All</option>
+                <option value="1">New</option>
+                <option value="2">Used</option>
+              </select><small class="form-text text-muted"><b>Filter</b> by Condition</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2" [formGroup]="searchGroup">
+                    <input type="text" class="form-control" name="searchText" placeholder="Search" value="" formControlName="searchTerm" /><small class="form-text text-muted"><b>Search</b> in all fields</small>
+                </div>
+            </div>
+        </div> -->
+        <!-- end: Filtration form -->
+
+        <!-- begin:Table -->
+        <div class="table-responsive angular-bootstrap-table">
+            <table class="table table-head-custom table-vertical-center overflow-hidden">
+                <thead>
+                    <th class="selection-cell-header" data-row-selection="true">
+                        <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectAllRows()"
+                  [checked]="grouping.checkAreAllRowsSelected()" /><span></span></label>
+                    </th>
+                    <th>NAME</th>
+                    <th>EMAIL</th>
+                    <th>DEFAULT USER TYPE</th>
+                    <th>STATUS</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of csuserService.items$ | async | filter: searchText |  paginate: { itemsPerPage: itemsPerPage , currentPage: p} ">
+                        <td class="selection-cell">
+                            <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectRow(user.id)"
+                    [checked]="grouping.isRowSelected(user.id)" />
+                  <span></span>
+                </label>
+                        </td>
+                        <td>{{ user.firstName}} {{ user.lastName}}</td>
+                        <td>{{ user.email}}</td>
+                        <td>{{ user.userProfiles[0].profileType.profileName }}</td>
+                        <td>{{ user.statusCode }}</td>
+                        <td>
+                            <!-- edit -->
+                            <a title="Edit user" class="btn btn-icon btn-light btn-hover-primary btn-xs mx-3" [routerLink]="'/admin/user/edit/' + user.id">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-primary"></span>
+                            </a>
+                            <!-- delete -->
+                            <a title="Delete user" class="btn btn-icon btn-light btn-hover-danger btn-xs" (click)="delete(user.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-danger"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <pagination-controls (pageChange)="p= $event"></pagination-controls>
+
+        <!-- end: Table -->
+        <!-- <pagination-controls (pageChange)="p= $event"></pagination-controls> -->
+
+        <!-- begin: Grouping -->
+        <ng-container *ngIf="grouping.getSelectedRowsCount()">
+            <div class="form">
+                <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+                    <div class="col-xl-12">
+                        <div class="form-group form-group-inline">
+                            <div class="form-label form-label-no-wrap">
+                                <label class="font-bold font-danger"><span>Selected records count:
+                                <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1" (click)="deleteSelected()">
+                                    <i class="fa fa-trash"></i> Delete All
+                                </button>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <!-- end: Grouping -->
+
+    </div>
+</div>

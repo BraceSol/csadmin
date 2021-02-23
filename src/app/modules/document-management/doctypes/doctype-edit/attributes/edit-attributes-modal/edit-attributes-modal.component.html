@@ -1,0 +1,105 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <ng-container *ngIf="attrib">
+                <ng-container *ngIf="attrib.id">Edit</ng-container>
+                <ng-container *ngIf="!attrib.id">Create</ng-container>
+                Document Attribute
+                <ng-container *ngIf="attrib.id"> with ID '{{attrib.title}}</ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent">
+                <div class="spinner spinner-lg spinner-success"></div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="attrib">
+            <form class="form form-label-right" (ngSubmit)="onSubmit()" #f="ngForm">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label class="form-label">Attribute Name</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" required minlength="3" #title='ngModel' [(ngModel)]="attributeModel.title" name="title" placeholder="Attribute Name" autocomplete="off" />
+                        <!-- <span class="help-block" *ngIf="!title.valid && title.touched || title.dirty" style="color: red;">Attribute name is required</span> -->
+                        <!-- <div *ngIf="title.invalid && (title.dirty || title.touched)"></div> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Description</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" required minlength="3" #description='ngModel' [(ngModel)]="attributeModel.description" name="Description" placeholder="Enter Description" autocomplete="off" required />
+                        <!-- <span class="help-block" *ngIf="!description.valid && description.touched || description.dirty" style="color: red;">Description is required</span> -->
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label>Attribute Type</label>
+                        <select class="form-control form-control-lg form-control-solid" (change)="onChangeSelect($event.target.value)" required minlength="3" #attributeType='ngModel' [(ngModel)]="attributeModel.attributeType" name="attributeType">
+                            <option value="string">Input</option>
+                            <option value="number">Numeric</option>
+                            <option value="dropdown">DropDown</option>
+                            <option value="checkbox">CheckBox</option>
+                            <option value="radio">Radio</option>
+                            <option value="date">Date</option>
+                            <option value="boolean">Boolean</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="form-label">Help Text</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" minlength="3" #helpText='ngModel' [(ngModel)]="attributeModel.helpText" name="helpText" placeholder="Help Text" autocomplete="off" />
+                        <!-- <span class="help-block" *ngIf="!helpText.valid && helpText.touched || helpText.dirty" style="color: red;">Help text is required</span> -->
+
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>Default Value</label>
+                            <input type="text" class="form-control form-control-lg form-control-solid" minlength="3" #defaultValue='ngModel' [(ngModel)]="attributeModel.defaultValue" name="defaultValue" placeholder="Default Value" autocomplete="off" />
+                            <span class="help-block" *ngIf="!defaultValue.valid && defaultValue.touched" style="color: red;">defaultValue is required</span>
+                        </div>
+                        <div class="col-lg-6" *ngIf="attributeModel.attributeType == 'string'">
+                            <label class="form-label">Max Length</label>
+                            <input type="number" class="form-control form-control-lg form-control-solid" minlength="3" #MaxLength='ngModel' [(ngModel)]="attributeModel.maxLength" name="maxLength" placeholder="Max Length" autocomplete="off" />
+                            <!-- <span class="help-block" *ngIf="!Maxlength.valid && Maxlength.touched " style="color: red;">Maxlength is required</span> -->
+
+                        </div>
+                        <div class="col-lg-6" *ngIf="attributeModel.attributeType == 'dropdown'">
+                            <label>Allow Multiple Select</label>
+                            <select class="form-control form-control-lg form-control-solid" #attributeType='ngModel' [(ngModel)]="attributeModel.isMultiSelect" name="multipleSelect">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-6" *ngIf="attributeModel.attributeType == 'number'">
+                            <label>Min Value</label>
+                            <input type="text" class="form-control form-control-lg form-control-solid" #Minlength='ngModel' [(ngModel)]="attributeModel.minLength" name="minValue" placeholder="Minimum Value" autocomplete="off" />
+                            <span class="help-block" *ngIf="!Minlength.valid && Minlength.touched " style="color: red;">Minlength is required</span>
+                        </div>
+                        <div class="col-lg-6" *ngIf="attributeModel.attributeType == 'number'">
+                            <label>Max Value</label>
+                            <input type="text" class="form-control form-control-lg form-control-solid" #defaultValue='ngModel' [(ngModel)]="attributeModel.maxValue" name="maxValue" placeholder="Maximum Value" autocomplete="off" />
+                        </div>
+
+                        <div class="col-lg-6" [hidden]='hideSelect'>
+                            <label class="form-label">Options</label>
+                            <textarea rows="6" class="form-control form-control-lg form-control-solid" name="attribFieldOptions" [(ngModel)]="attribFieldOptions"></textarea>
+                            <div class="feedback" style="color:red;">Please enter each option on a new line in the format of <br /><b>value</b> : <b>text</b>.</div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+        <ng-container *ngIf="attrib">
+
+            <button type="submit" class="btn btn-primary btn-elevate" (click)="save()">Save</button>
+            <!-- <button type="submit" class="btn btn-primary btn-elevate" [disabled]="!ngForm.valid" (click)="save()" >Save</button> -->
+
+        </ng-container>
+    </div>
+</div>

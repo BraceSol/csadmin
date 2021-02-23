@@ -1,0 +1,98 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <ng-container *ngIf="entityRec">
+                <ng-container *ngIf="entityRec.id">Edit</ng-container>
+                <ng-container *ngIf="!entityRec.id">Create</ng-container>
+                Compliance Report
+                <ng-container *ngIf="entityRec.id"> with ID '{{entityRec.id}}</ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent">
+                <div class="spinner spinner-lg spinner-success"></div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="entityRec">
+            <form action="#" class="form form-label-right" [formGroup]="formGroup">
+                <div class="form-group row">
+                    <div class="col-xl-12">
+                        <label class="form-label">Employer</label>
+                        <select class="form-control form-control-lg form-control-solid" formControlName="employerId" name="employerId">
+                            <!-- <option value="">Please select <b>Profession</b></option> -->
+                            <option [value]="employer.id" *ngFor="let employer of employersList"> {{employer.employerName}} </option>
+                          </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label>Profession</label>
+                        <select class="form-control form-control-lg form-control-solid" formControlName="professionId" name="professionId">
+                          <!-- <option value="">Please select <b>Profession</b></option> -->
+                          <option [value]="profession.id" *ngFor="let profession of professionsList"> {{profession.professionName}} </option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Expertise</label>
+                        <select class="form-control form-control-lg form-control-solid" formControlName="specialtyId" name="specialtyId">
+                          <!-- <option value="">Please select <b>Expertise</b></option> -->
+                          <option  *ngFor="let specialty of specialtiesList" [value]="specialty.id">{{specialty.specialtyName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <div class="col-lg-6">
+                        <label>Department</label>
+                        <select class="form-control form-control-lg form-control-solid" formControlName="departmentId" name="departmentId">
+                           <option  *ngFor="let dept of departmentsList" [value]="dept.id">{{dept.departmentName}}</option>
+                        </select>
+                        <div class="feedback">Please select <b>Department</b></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Location</label>
+                        <select class="form-control form-control-lg form-control-solid" formControlName="locationId" name="locationId">
+                            <option  *ngFor="let location of locationsList" [value]="location.id">{{location.locationName}}</option>
+                        </select>
+                        <div class="feedback">Please select <b>Department</b></div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Start Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="startDate" ngbDatepicker #d="ngbDatepicker" formControlName="startDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                                <i class="la la-calendar"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">End Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="endDate" ngbDatepicker #de="ngbDatepicker" formControlName="endDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" (click)="de.toggle()" type="button">
+                                <i class="la la-calendar"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+        <ng-container *ngIf="entityRec">
+            <button type="submit" class="btn btn-primary btn-elevate" (click)="save()">Save</button>
+        </ng-container>
+    </div>
+</div>

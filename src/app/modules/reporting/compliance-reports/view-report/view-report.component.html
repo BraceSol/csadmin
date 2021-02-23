@@ -1,0 +1,212 @@
+<div class="card card-custom gutter-b">
+    <ng-container *ngIf="isLoading$ | async">
+        <div class="progress progress-modal">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </ng-container>
+
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">
+                <ng-container *ngIf="complianceReportProfile">
+                    Compliance Report Detail
+                    <span *ngIf="complianceReportProfile && complianceReportProfile.id">'{{ complianceReportProfile.user.lastName }}, {{ complianceReportProfile.user.firstName }} : {{ complianceReportProfile.employer.employerName }}'</span>
+                </ng-container>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <a type="button" class="btn btn-light" routerLink="/reporting/compliance/">
+                <i class="fa fa-arrow-left"></i>Back
+            </a>
+            <button class="btn btn-secondary ml-2" (click)="reset()">
+          <i class="fa fa-redo"></i>Reset
+        </button>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="row" *ngIf="complianceReportProfile && complianceReportProfile.user">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Professional Name</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" [(ngModel)]="complianceReportProfile.user.lastName + ', ' + complianceReportProfile.user.firstName" name="fullName" />
+                </div>
+                <div class="form-group">
+                    <label>Profession</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" [(ngModel)]="complianceReportProfile.profession.professionName" name="professionName" />
+                </div>
+                <div class="form-group">
+                    <label>Specialty</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" [(ngModel)]="complianceReportProfile.specialty.specialtyName" name="specialtyName" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Employer Name</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" [(ngModel)]="complianceReportProfile.employer.employerName" name="employerName" />
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" [(ngModel)]="complianceReportProfile.departmentId" name="departmentId" />
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" [(ngModel)]="complianceReportProfile.locationId" name="locationId" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">{{ complianceReportProfile.currentScore }} %</div>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+            <li *ngIf="complianceReportProfile && complianceReportProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.APPROVED_DOCS)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.APPROVED_DOCS" [class.active]="activeTabId === tabs.APPROVED_DOCS">Approved Documents</a>
+            </li>
+            <li *ngIf="complianceReportProfile && complianceReportProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.MISSING_TAB)">
+                <a class="nav-link" data-toggle="tab" role="button" [attr.aria-selected]="activeTabId === tabs.MISSING_TAB" [class.active]="activeTabId === tabs.MISSING_TAB">Missing Documents</a>
+            </li>
+            <li *ngIf="complianceReportProfile && complianceReportProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.EXPIRING_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.EXPIRING_TAB" [class.active]="activeTabId === tabs.EXPIRING_TAB">Expiring Documents</a>
+            </li>
+            <li *ngIf="complianceReportProfile && complianceReportProfile.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.ACTIVITY_TAB)">
+                <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.ACTIVITY_TAB" [class.active]="activeTabId === tabs.ACTIVITY_TAB">Activity Log</a>
+            </li>
+        </ul>
+
+        <ng-container *ngIf="activeTabId === tabs.APPROVED_DOCS">
+            <div class="mt-5" *ngIf="complianceReportProfile">
+                <!-- begin:Table -->
+                <div class="table-responsive angular-bootstrap-table">
+                    <table class="table table-head-custom table-vertical-center overflow-hidden">
+                        <thead>
+                            <th>DOCUMENT CATEGORY</th>
+                            <th>DOCUMENT TYPE</th>
+                            <th>FILENAME</th>
+                            <th>CREATED ON</th>
+                            <th>VALIDATION MESSAGE</th>
+                            <th>ACTIONS</th>
+                        </thead>
+                        <tbody>
+                            <!-- <tr *ngFor="let exampleDoc of doctype.exampleDocuments"> -->
+                            <tr>
+                                <td>{{ 'Category' }}</td>
+                                <td>{{ 'Type' }}</td>
+                                <td>{{ 'filename' }}</td>
+                                <td>{{ 'created On' }}</td>
+                                <td>{{ 'Validation Message' }}</td>
+                                <td>
+                                    <button title="View Document" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
+                                        <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                                        class="svg-icon svg-icon-md svg-icon-primary">
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end: Table -->
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.MISSING_TAB && complianceReportProfile && complianceReportProfile.id">
+            <div class="mt-5" *ngIf="complianceReportProfile">
+                <!-- begin:Table -->
+                <div class="table-responsive angular-bootstrap-table">
+                    <table class="table table-head-custom table-vertical-center overflow-hidden">
+                        <thead>
+                            <th>DOCUMENT CATEGORY</th>
+                            <th>DOCUMENT TYPE</th>
+                            <th>VALIDATION MESSAGE</th>
+                            <th>ACTIONS</th>
+                        </thead>
+                        <tbody>
+                            <!-- <tr *ngFor="let exampleDoc of doctype.exampleDocuments"> -->
+                            <tr>
+                                <td>{{ 'Category' }}</td>
+                                <td>{{ 'Type' }}</td>
+                                <td>{{ 'Validation Message' }}</td>
+                                <td>
+                                    <button title="View Document" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
+                                        <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                                        class="svg-icon svg-icon-md svg-icon-primary">
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end: Table -->
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.EXPIRING_TAB && complianceReportProfile && complianceReportProfile.id">
+            <div class="mt-5" *ngIf="complianceReportProfile">
+                <!-- begin:Table -->
+                <div class="table-responsive angular-bootstrap-table">
+                    <table class="table table-head-custom table-vertical-center overflow-hidden">
+                        <thead>
+                            <th>DOCUMENT CATEGORY</th>
+                            <th>DOCUMENT TYPE</th>
+                            <th>FILENAME</th>
+                            <th>CREATED ON</th>
+                            <th>EXPIRES ON</th>
+                            <th>VALIDATION MESSAGE</th>
+                            <th>ACTIONS</th>
+                        </thead>
+                        <tbody>
+                            <!-- <tr *ngFor="let exampleDoc of doctype.exampleDocuments"> -->
+                            <tr>
+                                <td>{{ 'Category' }}</td>
+                                <td>{{ 'Type' }}</td>
+                                <td>{{ 'filename' }}</td>
+                                <td>{{ 'created On' }}</td>
+                                <td>{{ 'expires On' }}</td>
+                                <td>{{ 'Validation Message' }}</td>
+                                <td>
+                                    <button title="View Document" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
+                                        <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                                        class="svg-icon svg-icon-md svg-icon-primary">
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end: Table -->
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === tabs.ACTIVITY_TAB && complianceReportProfile && complianceReportProfile.id">
+            <div class="mt-5" *ngIf="complianceReportProfile">
+                <!-- begin:Table -->
+                <div class="table-responsive angular-bootstrap-table">
+                    <table class="table table-head-custom table-vertical-center overflow-hidden">
+                        <thead>
+                            <th>ENTITY TYPE</th>
+                            <th>CATEGORY</th>
+                            <th>ACTION</th>
+                            <th>CREATED AT</th>
+                            <th>ACTIONS</th>
+                        </thead>
+                        <tbody>
+                            <!-- <tr *ngFor="let activity of thisService.items$ | async | filter: searchText |  paginate: { itemsPerPage: itemsPerPage , currentPage: p}"> -->
+                            <tr>
+                                <td>{{ 'activity.entityType' }}</td>
+                                <td>{{ 'activity.activityCategory' }}</td>
+                                <td>{{ 'activity.activityTitle' }}</td>
+                                <td>{{ 'activity.createdAt | date' }}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end: Table -->
+            </div>
+        </ng-container>
+
+    </div>
+</div>

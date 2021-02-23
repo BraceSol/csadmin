@@ -1,0 +1,30 @@
+<div class="mt-5">
+    <!-- begin:Table -->
+    <div class="table-responsive angular-bootstrap-table">
+        <table class="table table-head-custom table-vertical-center overflow-hidden">
+            <thead>
+                <th>PROFILE TYPE</th>
+                <th>DESCRIPTION</th>
+                <th>CREATED ON</th>
+                <th>LAST LOGIN</th>
+                <th>ACTIONS</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let profile of entityService.items$ | async | filter: searchText |  paginate: { itemsPerPage: itemsPerPage , currentPage: p} ">
+                    <td>{{ profile.profileName }}</td>
+                    <td>{{ profile.description }}</td>
+                    <td>{{ profile.createdAt | date }}</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <button title="Delete device" class="btn btn-icon btn-light btn-hover-danger btn-sm" (click)="delete(profile.id)">
+                            <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                                class="svg-icon svg-icon-md svg-icon-danger">
+                            </span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- end: Table -->
+</div>

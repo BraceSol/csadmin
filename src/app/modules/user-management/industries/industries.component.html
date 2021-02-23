@@ -1,0 +1,58 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Industries</h3>
+        </div>
+        <div class="card-toolbar">
+            <div class="form form-label-right">
+                <div class="row">
+                    <a type="button" class="btn btn-primary mx-8" (click)="create()">New Industry</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="form form-label-right">
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" name="searchText" placeholder="Search" [(ngModel)]="searchText" value="" /><small class="form-text text-muted"><b>Search</b> in all fields</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- begin:Table -->
+        <div class="table-responsive angular-bootstrap-table">
+            <table class="table table-head-custom table-vertical-center overflow-hidden">
+                <thead>
+                    <th>INDUSTRY</th>
+                    <th>DESCRIPTION</th>
+                    <th>ACTIONS</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let industry of industryService.items$ | async | filter:searchText |  paginate: { itemsPerPage: itemsPerPage , currentPage: p} ">
+                        <td>{{ industry.industryName }}</td>
+                        <td>{{ industry.description }}</td>
+                        <td>
+                            <!-- edit -->
+                            <a title="Edit" class="btn btn-icon btn-light btn-hover-primary btn-xs mx-3" (click)="edit(industry.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-primary">
+                      </span>
+                            </a>
+                            <!-- delete -->
+                            <a title="Delete" class="btn btn-icon btn-light btn-hover-danger btn-xs" (click)="delete(industry.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-danger">
+                      </span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end: Table -->
+        <pagination-controls (pageChange)="p= $event"></pagination-controls>
+
+    </div>
+</div>

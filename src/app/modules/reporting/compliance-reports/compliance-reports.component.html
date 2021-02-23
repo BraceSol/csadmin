@@ -1,0 +1,98 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Compliance Reports</h3>
+        </div>
+        <div class="card-toolbar">
+            <!-- <a type="button" class="btn btn-primary" (click)="create()">New Report</a> -->
+        </div>
+    </div>
+    <div class="card-body">
+    <!-- begin: Filtration form -->
+    <div class="form margin-b-30">
+        <div class="form-filtration">
+            <div class="row align-items-center">
+                <div class="col-md-2 margin-bottom-10-mobile">
+                    <form>
+                        <div>
+                            <input type="text" class="form-control" name="searchText" placeholder="Search" [(ngModel)]="searchTerm" />
+                            <small class="form-text text-muted"><b>Search</b> in all fields</small></div>
+                    </form>
+                </div>
+                <div class="col-md-8 margin-bottom-10-mobile"></div>
+                <div class="col-md-2 text-right margin-bottom-10-mobile"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end: Filtration form -->
+    <!-- begin:Table -->
+    <div class="table-responsive angular-bootstrap-table">
+        <table class="table table-head-custom table-vertical-center overflow-hidden">
+            <thead>
+                <th class="selection-cell-header" data-row-selection="true">
+                    <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectAllRows()"
+                [checked]="grouping.checkAreAllRowsSelected()" /><span></span></label>
+                </th>
+                <th>EMPLOYER</th>
+                <th>PROFESSIONAL</th>
+                <th>PROFESSION</th>
+                <th>SPECIALTY</th>
+                <th>SCORE</th>
+                <th>LAST UPDATED</th>
+                <th>ACTIONS</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let report of thisService.items$ | async | filter:searchTerm |  paginate: { itemsPerPage: itemsPerPage , currentPage: p}">
+                    <td class="selection-cell">
+                        <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectRow(report.id)" [checked]="grouping.isRowSelected(report.id)" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>{{ report.employer.employerName }}</td>
+                    <td>{{ report.user.lastName }}, {{ report.user.firstName }}</td>
+                    <td>{{ report.profession.professionName }}</td>
+                    <td>{{ report.specialty.specialtyName }}</td>
+                    <td>{{ report.currentScore }}</td>
+                    <td>{{ report.updatedAt | date }}</td>
+                    <td>
+                        <button title="View" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3" [routerLink]="'/reporting/compliance/' + report.id">
+                            <span [inlineSVG]="'./assets/media/svg/icons/Communication/Mail-box.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-primary"></span>
+                        </button>
+                        <button title="Edit" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3" (click)="edit(report.id)">
+                            <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true" class="svg-icon svg-icon-md svg-icon-primary"></span>
+                        </button>
+                        <button title="Delete" class="btn btn-icon btn-light btn-hover-danger btn-sm" (click)="delete(report.id)">
+                            <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"class="svg-icon svg-icon-md svg-icon-danger"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- end: Table -->
+    <!-- begin: Grouping -->
+    <ng-container *ngIf="grouping.getSelectedRowsCount()">
+        <div class="form">
+            <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+                <div class="col-xl-12">
+                    <div class="form-group form-group-inline">
+                        <div class="form-label form-label-no-wrap">
+                            <label class="font-bold font-danger"><span>Selected records count:
+                            <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1" (click)="deleteSelected()">
+                                <i class="fa fa-trash"></i> Delete All
+                            </button>&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- end: Grouping -->
+
+    <pagination-controls (pageChange)="p= $event"></pagination-controls>
+    <!-- <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator" [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator> -->
+</div>
+</div>

@@ -1,0 +1,66 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <ng-container *ngIf="entityRec">
+                <ng-container *ngIf="entityRec.id">Edit</ng-container>
+                <ng-container *ngIf="!entityRec.id">Create</ng-container>
+                Reference
+                <ng-container *ngIf="entityRec.id">'{{entityRec.referenceName}}'</ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent">
+                <div class="spinner spinner-lg spinner-success"></div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="entityRec">
+            <form action="#" class="form form-label-right" [formGroup]="formGroup">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="referenceName" placeholder="Reference Name" autocomplete="off" [class.is-invalid]="isControlInvalid('referenceName')" [class.is-valid]="isControlValid('referenceName')" formControlName="referenceName" />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'referenceName')">Certification Name is required</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Employer</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="referenceEmployer" placeholder="Employer" autocomplete="off" [class.is-invalid]="isControlInvalid('referenceEmployer')" [class.is-valid]="isControlValid('referenceEmployer')" formControlName="referenceEmployer" />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'referenceEmployer')">Employer is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="form-label">Email Address</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="referenceEmail" placeholder="Email Address" autocomplete="off" [class.is-invalid]="isControlInvalid('referenceEmail')" [class.is-valid]="isControlValid('referenceEmail')" formControlName="referenceEmail" />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'referenceEmail')">Email Address is required</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="referencePhone" placeholder="Phone Number" autocomplete="off" [class.is-invalid]="isControlInvalid('referencePhone')" [class.is-valid]="isControlValid('referencePhone')" formControlName="referencePhone" />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'referencePhone')">Phone Number is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="referenceTitle" placeholder="Title" autocomplete="off" [class.is-invalid]="isControlInvalid('referenceTitle')" [class.is-valid]="isControlValid('referenceTitle')" formControlName="referenceTitle" />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'referenceTitle')">Title is required</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Contact Method</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="contactMethod" placeholder="Issuing Body" autocomplete="off" [class.is-invalid]="isControlInvalid('contactMethod')" [class.is-valid]="isControlValid('contactMethod')" formControlName="contactMethod" />
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'contactMethod')">Contact Method is required</div>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+        <ng-container *ngIf="entityRec">
+            <button type="submit" class="btn btn-primary btn-elevate" (click)="save()" [disabled]="formGroup.invalid">Save</button>
+        </ng-container>
+    </div>
+</div>
